@@ -355,7 +355,6 @@ uint8_t isPacketApprove(struct packetInfo packet, frules *head){
             protocol = 1;
         }
         /*Check if IP and Port addresses Match */
-
         if(current->sourceIP_wild_star_location == 9){
             if(current->packetrules.sIP == packet.sIP){
                 sIPPass = 1;
@@ -367,11 +366,11 @@ uint8_t isPacketApprove(struct packetInfo packet, frules *head){
                 sIPPass = 1;
             }
         }
-        /* CHECK Destination Port */
+        /* CHECK Source Port */
         //Check if there is a wild-star
         if(current->sPortstar == 0){
-            if(current->packetrules.sPort << 16 == packet.sPort){
-                dPortPass = 1;
+            if(current->packetrules.sPort == packet.sPort){
+                sPortPass = 1;
             }
         }else{
             sPortPass = 1;
