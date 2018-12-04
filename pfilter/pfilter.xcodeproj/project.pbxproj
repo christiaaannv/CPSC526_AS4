@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0842335121B1ECF90046BE0A /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 0842335021B1ECF90046BE0A /* main.c */; };
-		0842335821B1EDF10046BE0A /* rawpacket.dat in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0842335721B1ED7B0046BE0A /* rawpacket.dat */; };
-		0842335A21B217BD0046BE0A /* rules.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0842335921B216950046BE0A /* rules.txt */; };
 		08810FB321B5AC400032789E /* permisionsFile.c in Sources */ = {isa = PBXBuildFile; fileRef = 08810FB221B5AC400032789E /* permisionsFile.c */; };
+		08F0B6D121B608B8006B1D0B /* rules1.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 08F0B6D021B608B2006B1D0B /* rules1.txt */; };
+		08F0B6D221B608BC006B1D0B /* rawpacket1.dat in CopyFiles */ = {isa = PBXBuildFile; fileRef = 08F0B6CF21B608AD006B1D0B /* rawpacket1.dat */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -20,8 +20,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
-				0842335821B1EDF10046BE0A /* rawpacket.dat in CopyFiles */,
-				0842335A21B217BD0046BE0A /* rules.txt in CopyFiles */,
+				08F0B6D221B608BC006B1D0B /* rawpacket1.dat in CopyFiles */,
+				08F0B6D121B608B8006B1D0B /* rules1.txt in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -30,10 +30,10 @@
 /* Begin PBXFileReference section */
 		0842334D21B1ECF90046BE0A /* pfilter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = pfilter; sourceTree = BUILT_PRODUCTS_DIR; };
 		0842335021B1ECF90046BE0A /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		0842335721B1ED7B0046BE0A /* rawpacket.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = rawpacket.dat; path = ../../rawpacket.dat; sourceTree = "<group>"; };
-		0842335921B216950046BE0A /* rules.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = rules.txt; sourceTree = "<group>"; };
 		08810FB121B5AC400032789E /* permisionsFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = permisionsFile.h; sourceTree = "<group>"; };
 		08810FB221B5AC400032789E /* permisionsFile.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = permisionsFile.c; sourceTree = "<group>"; };
+		08F0B6CF21B608AD006B1D0B /* rawpacket1.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = rawpacket1.dat; path = ../../AS4/rawpacket1.dat; sourceTree = "<group>"; };
+		08F0B6D021B608B2006B1D0B /* rules1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = rules1.txt; path = ../../AS4/rules1.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,9 +67,9 @@
 			isa = PBXGroup;
 			children = (
 				0842335021B1ECF90046BE0A /* main.c */,
-				0842335921B216950046BE0A /* rules.txt */,
-				0842335721B1ED7B0046BE0A /* rawpacket.dat */,
 				08810FB121B5AC400032789E /* permisionsFile.h */,
+				08F0B6CF21B608AD006B1D0B /* rawpacket1.dat */,
+				08F0B6D021B608B2006B1D0B /* rules1.txt */,
 				08810FB221B5AC400032789E /* permisionsFile.c */,
 			);
 			path = pfilter;

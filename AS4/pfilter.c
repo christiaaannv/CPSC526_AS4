@@ -1,10 +1,9 @@
 //
-//
 //  pfilter.c
 //
 //  Created by Christian Velasco on 2018-11-30.
 //  Copyright © 2018 Christian Velasco. All rights reserved.
-//
+//  ID: 10159288
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -59,14 +58,13 @@ typedef struct rules{
     
 } frules;
 
-
-/* Function: packetInfo 
+/* Function: packetInfo
  * @param: const char* file -> name of the rawPacket file
- * info: 
- *      Reads the rawPacket, and creates a struct packetInfo which the 
+ * info:
+ *      Reads the rawPacket, and creates a struct packetInfo which the
  *      revelant information for the assignment
- * 
- */ 
+ *
+ */
 struct packetInfo getPacketInfo(const char* file){
     
     //Open file
@@ -124,8 +122,8 @@ struct packetInfo getPacketInfo(const char* file){
 
 /* Function: push
  * @param: frules *head -> head of the permisions linked-list
- * @paramt: frules *newRule -> a frule struct with a rule 
- * Info: 
+ * @paramt: frules *newRule -> a frule struct with a rule
+ * Info:
  *      Adds new rule to the end of the linked list
  */
 void push(frules *head, frules *newRule){
@@ -146,17 +144,17 @@ void push(frules *head, frules *newRule){
     current->next->destinationIP_wild_star_location = newRule->destinationIP_wild_star_location;
     current->next->sourceIP_wild_star_location = newRule->sourceIP_wild_star_location;
     current->next->sPortstar = newRule->sPortstar;
-    current->next->dPortstar = newRule->dPortstar; 
+    current->next->dPortstar = newRule->dPortstar;
     current->next->next = NULL;
     
-
+    
 }
 
 /* Function: getIP_Wild_Star_Position
  * @param: char * ipString -> an IP address in string form (i.e. "10.10.10.10")
- * Info: 
+ * Info:
  *      This is a helper function which check which position the Wild star in the in IP address
- *      - This number is used for shifting later on, to compare the IP address 
+ *      - This number is used for shifting later on, to compare the IP address
  */
 uint8_t getIP_Wild_Star_Position(char * ipString){
     int starLocation = 9;
@@ -186,15 +184,48 @@ uint8_t getIP_Wild_Star_Position(char * ipString){
     return starLocation;
 }
 
+
+void printStructRule(frules *rule){
+    
+    char* permision;
+    char* protocol;
+    if(rule->permision == Allowed){
+        permision = "Allow";
+    }else if( rule->permision == Denied){
+        permision = "Deny";
+    }else{
+        permision = "Undefined";
+    }
+    if(rule->packetrules.layerProtocol == TCP){
+        protocol = "TCP";
+    }else if( rule->packetrules.layerProtocol == UDP){
+        protocol = "UDP";
+    }else{
+        protocol = "UNKOWN";
+    }
+    printf("RULE\n");
+    printf("Permision:        %s\n", permision);
+    printf("Protocol:         %s\n", protocol);
+    printf("Source IP:        %x\n", rule->packetrules.sIP);
+    printf("Source Port:      %d\n", rule->packetrules.sPort);
+    printf("Destination IP:   %x\n", rule->packetrules.dIP);
+    printf("Destination Port: %d\n", rule->packetrules.dPort);
+    printf("WILD START INFO\n");
+    printf("sIP Wild-star: %d\n", rule->sourceIP_wild_star_location);
+    printf("sPort Wild-start: %d\n", rule->sPortstar);
+    printf("dIP Wild-start %d\n", rule->destinationIP_wild_star_location);
+    printf("dPort WildStart %d\n", rule->dPortstar);
+    
+}
+
 /* Function: getRules
  * @param: const char * file -> Name of file which contains the permision rules rules
  * @param: frules *head -> head pointer to the linked list, used to store the permision rules
  * Info:
  *      This functions reads a permision files, and stores all the rules in a linked list.
  */
-
 void getRules (const char *file, frules *head){
-
+    
     //Open file
     FILE *rules_f = fopen(file,"rb");
     char * line = NULL;
@@ -216,8 +247,8 @@ void getRules (const char *file, frules *head){
         //GET INITIAL-TOKEN
         char *token = strtok(line, "\n ");
         /*
-        IF INITIAL TOKEN == \n *space, it means we reach and empty line
-        will assume this is the end of a file */
+         IF INITIAL TOKEN == \n *space, it means we reach and empty line
+         will assume this is the end of a file */
         if( token == NULL){
             current = NULL;
             break;
@@ -239,13 +270,13 @@ void getRules (const char *file, frules *head){
         }else{
             current->packetrules.layerProtocol = UNKNOWN;
         }
-
+        
         /* GET Source IP address: Check if there is a wild star '*'. */
         token = strtok(NULL,":");
         char* s = strchr(token, '*');                              //CHECK if there is a '*'
         if( s == NULL){                                            //There is no '*'
             current->packetrules.sIP = inet_addr(token);
-            current->sourceIP_wild_star_location = 9; 
+            current->sourceIP_wild_star_location = 9;
             
         }else{                                                     //There is a '*'
             current->sourceIP_wild_star_location = getIP_Wild_Star_Position(token);
@@ -263,7 +294,7 @@ void getRules (const char *file, frules *head){
             current->packetrules.sPort = 0;
             
         }
-         /* GET Destination IP address: Check if there is a wild star '*'. */
+        /* GET Destination IP address: Check if there is a wild star '*'. */
         token = strtok(NULL, " ");
         token = strtok(NULL,":");
         s = strchr(token, '*');
@@ -284,27 +315,28 @@ void getRules (const char *file, frules *head){
             current->packetrules.dPort = (uint16_t) strtoul(token, NULL, 10);
         }else{
             current->dPortstar = 1;
-            current->packetrules.dPort = 0; 
+            current->packetrules.dPort = 0;
         }
         //PUSH NEW RULE INTO LIST
         push(head, current);
         free(current);
     }
-
+    
     //clean up
     fclose(rules_f);
     free(line);
-    free(current);
+    //free(current);
 }
+
 /* Function: isPacketApprove
  * @param: struct packetInfo packet -> struct containting the IPs,Ports and Protocols from the rawPacket
- * @param: frules *head -> head of the linked-list of the permision rules  
- *Info: 
- *      This function reads through the linked-list of permisions looking for a rule 
- *      that holds for the rawpacket. It returns an answer base on the rules. 
- *      0 - deny 
- *      1 - allow 
- *      2 - unspecified 
+ * @param: frules *head -> head of the linked-list of the permision rules
+ *Info:
+ *      This function reads through the linked-list of permisions looking for a rule
+ *      that holds for the rawpacket. It returns an answer base on the rules.
+ *      0 - deny
+ *      1 - allow
+ *      2 - unspecified
  */
 uint8_t isPacketApprove(struct packetInfo packet, frules *head){
     
@@ -322,7 +354,7 @@ uint8_t isPacketApprove(struct packetInfo packet, frules *head){
             protocol = 1;
         }
         /*Check if IP and Port addresses Match */
-
+        
         if(current->sourceIP_wild_star_location == 9){
             if(current->packetrules.sIP == packet.sIP){
                 sIPPass = 1;
@@ -350,7 +382,7 @@ uint8_t isPacketApprove(struct packetInfo packet, frules *head){
                 dIPPass = 1;
             }
         }else{ /* There is a Wild-star, Thus we are going to only check for the initial */
-               //((packet.dIP>> (8*current->destinationIP_wild_star_location)) & 0xFF) == ;
+            //((packet.dIP>> (8*current->destinationIP_wild_star_location)) & 0xFF) == ;
             if(current->destinationIP_wild_star_location == 4){
                 dIPPass = 1;
             }else if( (current->packetrules.dIP << (8*current->destinationIP_wild_star_location)) == (packet.dIP <<(8*current->destinationIP_wild_star_location) )){
@@ -385,12 +417,9 @@ uint8_t isPacketApprove(struct packetInfo packet, frules *head){
     return 2;
 }
 
-
-
 int main(int argc, const char * argv[]) {
     //Check Arguments are correct
     if( argc != 3){
-        printf("error\n"); 
         return -1;
     }
     //GET rules
@@ -406,8 +435,7 @@ int main(int argc, const char * argv[]) {
     
     //Check if we allowed the raw package
     uint8_t permision =  isPacketApprove(packet, head);
-
-    //Print Permisions
+    
     if(permision == 0){
         printf("deny\n");
     }else if(permision == 1){

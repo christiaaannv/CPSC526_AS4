@@ -59,6 +59,13 @@ typedef struct rules{
     
 } frules;
 
+/* Function: packetInfo
+ * @param: const char* file -> name of the rawPacket file
+ * info:
+ *      Reads the rawPacket, and creates a struct packetInfo which the
+ *      revelant information for the assignment
+ *
+ */
 struct packetInfo getPacketInfo(const char* file){
     
     //Open file
@@ -114,6 +121,12 @@ struct packetInfo getPacketInfo(const char* file){
     return packet;
 }
 
+/* Function: push
+ * @param: frules *head -> head of the permisions linked-list
+ * @paramt: frules *newRule -> a frule struct with a rule
+ * Info:
+ *      Adds new rule to the end of the linked list
+ */
 void push(frules *head, frules *newRule){
     //IF Head is empty
     frules * current = head;
@@ -138,6 +151,12 @@ void push(frules *head, frules *newRule){
 
 }
 
+/* Function: getIP_Wild_Star_Position
+ * @param: char * ipString -> an IP address in string form (i.e. "10.10.10.10")
+ * Info:
+ *      This is a helper function which check which position the Wild star in the in IP address
+ *      - This number is used for shifting later on, to compare the IP address
+ */
 uint8_t getIP_Wild_Star_Position(char * ipString){
     int starLocation = 9;
     char star = '*';
@@ -206,7 +225,6 @@ void printStructRule(frules *rule){
  * Info:
  *      This functions reads a permision files, and stores all the rules in a linked list.
  */
-
 void getRules (const char *file, frules *head){
 
     //Open file
@@ -308,14 +326,19 @@ void getRules (const char *file, frules *head){
     //clean up
     fclose(rules_f);
     free(line);
-    free(current);
+    //free(current);
 }
-/*
- *
- *
- *
- */
 
+/* Function: isPacketApprove
+ * @param: struct packetInfo packet -> struct containting the IPs,Ports and Protocols from the rawPacket
+ * @param: frules *head -> head of the linked-list of the permision rules
+ *Info:
+ *      This function reads through the linked-list of permisions looking for a rule
+ *      that holds for the rawpacket. It returns an answer base on the rules.
+ *      0 - deny
+ *      1 - allow
+ *      2 - unspecified
+ */
 uint8_t isPacketApprove(struct packetInfo packet, frules *head){
     
     frules *current = head;

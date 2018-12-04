@@ -63,11 +63,11 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "rules.txt"
+            argument = "rules1.txt"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "rawpacket.dat"
+            argument = "rawpacket1.dat"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
