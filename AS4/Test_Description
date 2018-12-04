@@ -1,0 +1,37 @@
+﻿
+Test Descriptions: 
+
+rawPacket1.txt will be used in test 1 to 4
+
+1. Simple ALLOW rule:
+This is to test a basic acceptance return. To ensure the fundamentals are working correctly.
+
+2. Simple Deny rule: 
+This is to test a basic deny return. To ensure the fundamentals are working correctly.
+3. Simple Unspecified rule: 
+This is to test a basic unspecified return. To ensure the fundamentals are working correctly.
+
+4. Rule with all equal Ports and IP address but different Protocol:
+This is to test the correctness of the program. We want to ensure that even though everything is correct, it does not over look at the protocol. 
+
+5. Rule with Wild-star in Port Number
+This is to test the correctness of the program. To check we allowed all packets with the same IP address, yet with different Port numbers.
+
+6. Rule with Wild-star in first part of IP address (10.10.10.*): 
+This is to test we can handle the wild-star correctly with IP address. Depending of the location, it implies more access or less access.
+
+7. Rule with Wild-star in Second part of IP address (10.10.*): 
+This is to test we can handle the wild-star correctly with IP address. Depending of the location, it implies more access or less access.
+
+8. Rule with Wild-star in Third part of IP address (10.*):
+This is to test we can handle the wild-star correctly with IP address. Depending of the location, it implies more access or less access.
+
+9. Rule with Wild-star in Both IP address and Port: 
+This is to test we can handle the wild-star correctly with IP address and Port numbers.
+
+10. Different transport Layer Protocol: 
+This is to test for incommoding packets without TCP or UDP, thus to ensure we ‘unspecified’ the packet. 
+
+
+
+
